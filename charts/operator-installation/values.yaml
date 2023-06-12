@@ -1,0 +1,9 @@
+enabled: true
+
+default:
+  operatorGroup: false
+  createNamespace: false
+  channel: stable
+  installPlanApproval: Automatic
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace

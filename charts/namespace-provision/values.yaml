@@ -1,0 +1,60 @@
+ocp_namespace:
+  name: rfc-822-name
+  description: "some namespace"
+  annotations:
+    content: playground
+  labels:
+    owner: jane.doe
+  quotas:
+    cpu: 9000m
+    memory: 8Gi
+    storage: 20Gi
+
+  rbac:
+    - role: admin
+      name:
+      - group1
+      - group4
+    - role: view
+      name:
+      - group2
+    - role: edit
+      name:
+      - group3
+
+  networkPolicy:
+    enabled: true
+
+networkPolicies:
+  - name: deny-all-by-default
+    spec:
+      podSelector: {}
+      ingress: []
+  - name: allow-from-same-namespace
+    spec:
+      ingress:
+        - from:
+          - podSelector: {}
+      podSelector: {}
+      policyTypes:
+        - Ingress
+  - name: allow-from-openshift-ingress
+    spec:
+      ingress:
+        - from:
+          - namespaceSelector:
+              matchLabels:
+                network.openshift.io/policy-group: ingress
+      podSelector: {}
+      policyTypes:
+        - Ingress
+  - name: allow-from-openshift-monitoring
+    spec:
+      ingress:
+        - from:
+          - namespaceSelector:
+              matchLabels:
+                network.openshift.io/policy-group: monitoring
+      podSelector: {}
+      policyTypes:
+        - Ingress

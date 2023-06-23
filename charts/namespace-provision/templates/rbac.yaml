@@ -1,0 +1,23 @@
+---
+apiVersion: v1
+kind: List
+metadata:
+  name: {{ $.Values.ocp_namespace.name }}-rb-list
+items:
+{{- range $rb := $.Values.ocp_namespace.rbac }}
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    name: "{{ $rb.role }}"
+    namespace: "{{ $.Values.ocp_namespace.name }}"
+  roleRef:
+    name: "{{ $rb.role }}"
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+  subjects:
+    {{- range $group := $rb.name }}
+  - kind: Group
+    name: "{{ $group }}"
+    apiGroup: rbac.authorization.k8s.io
+    {{- end }}
+{{- end }}

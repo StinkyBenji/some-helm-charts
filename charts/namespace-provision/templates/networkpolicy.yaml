@@ -1,0 +1,13 @@
+{{- if .Values.ocp_namespace.networkPolicy.enabled }}
+{{- range $policy := $.Values.networkPolicies }}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ .name }}
+  namespace: {{ $.Values.ocp_namespace.name }}
+spec:
+  {{- toYaml .spec | nindent 2 }}
+{{- end }}
+{{- end }}
+

@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: default-quota
+  namespace: {{ .Values.ocp_namespace.name }}
+spec:
+  hard:
+    limits.cpu: {{ .Values.ocp_namespace.quotas.cpu }}
+    limits.memory: {{ .Values.ocp_namespace.quotas.memory }}
+    requests.storage: {{ .Values.ocp_namespace.quotas.storage }}

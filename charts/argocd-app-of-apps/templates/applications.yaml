@@ -32,10 +32,10 @@ spec:
       {{- toYaml .syncOptions | nindent 6 }}
     {{- end}}
     {{- end }}
-	{{- if .multiSources }}
+  {{- if .multiSources }}
   sources:
   {{- toYaml .multiSources | nindent 4 }}
-	{{- else }}
+  {{- else }}
   source:
     {{- if .source.path }}
     path: {{ .source.path }}

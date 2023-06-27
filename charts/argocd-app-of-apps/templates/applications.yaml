@@ -6,14 +6,20 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: {{ .name }}
-{{- if .labels }}
+{{- if $.Values.default.app.labels }}
   labels:
+{{- toYaml $.Values.default.app.labels | nindent 4 }}
+{{- if .labels }}
 {{- toYaml .labels | nindent 4 }}
 {{- end }}
+{{- end }}
 
-{{- if .annotations }}
+{{- if $.Values.default.app.annotations }}
   annotations:
+{{- toYaml $.Values.default.app.annotations | nindent 4 }}
+{{- if .annotations }}
 {{- toYaml .annotations | nindent 4 }}
+{{- end }}
 {{- end }}
 spec:
   destination:

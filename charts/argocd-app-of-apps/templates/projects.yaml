@@ -1,0 +1,34 @@
+{{- if .Values.projects }}
+{{- range $project := .Values.projects }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: {{ .name  }}
+{{- if .labels  }}
+  labels:
+  {{- toYaml .labels | nindent 4 }}
+{{- end }}
+
+{{- if .annotations }}
+  annotations:
+  {{- toYaml .annotations | nindent 4 }}
+{{- end }}
+spec:
+  description: {{ tpl .description $ }}
+  sourceRepos:
+    {{- toYaml .sourceRepos | nindent 2 }}
+  {{- if $project.destinations }}
+  destinations:
+    {{- toYaml .destinations | nindent 2 }}
+    {{- end }}
+    {{- if .roles }}
+  roles:
+    {{- toYaml .roles | nindent 2 }}
+    {{- end }}
+  {{- if .clusterResourceWhitelist }}
+  clusterResourceWhitelist:
+    {{- toYaml .clusterResourceWhitelist | nindent 2 }}
+  {{- end }}
+{{- end }}
+{{- end }}

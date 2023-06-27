@@ -1,0 +1,72 @@
+default:
+  app:
+    enabled: true
+    enableAutoSync: true
+    syncOptions:
+    - ServerSideApply=true
+    destination:
+      namespace: openshift-gitops
+      server: https://kubernetes.default.svc
+    source:
+      repoURL: git@git1.com
+
+
+projects:
+  - name: test
+    description: test project
+    labels:
+      app: test
+    annotations:
+      owner: me
+    sourceRepos:
+    - a@git.com
+    - b@git.com
+    destinations:
+    - namespace: openshift-gitops
+      server: https://kubernetes.default.svc
+    roles:
+    - description: tenant admins
+      name: group
+      groups:
+        - group1
+      policies:
+        - p, proj:test:group, applications, sync, test/*,allow
+    - description: readonlys
+      name: group
+      groups:
+        - group2
+      policies:
+        - p, proj:test:group, applications, get, test/*,allow
+
+applications:
+  - name: test
+    labels:
+      app: test
+    annotations:
+      owner: test
+    enableAutoSync: true
+    syncOptions:
+    - ServerSideApply=true
+    enabled: true
+    source:
+      path: components/test/hcart
+      repoURL: test@git.com
+      targetRevision: dev
+      helm:
+        values: |
+          a: b
+          c: d
+    project: test
+    destination:
+      namespace: test
+      server: https://whatever.svc
+
+  - name: test2
+    multiSources:
+    - repoURL: git@git1.com
+      path: .
+    - repoURL: git@git2.com
+      path: component/test
+    destination:
+      namespace: test2
+      server: https://whatever.svc

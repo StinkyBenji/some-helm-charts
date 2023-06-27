@@ -1,0 +1,54 @@
+{{- if .Values.applications }}
+{{- range $app := .Values.applications }}
+{{- if hasKey $app "enabled" | ternary $app.enabled $.Values.default.app.enabled }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .name }}
+{{- if .labels }}
+  labels:
+{{- toYaml .labels | nindent 4 }}
+{{- end }}
+
+{{- if .annotations }}
+  annotations:
+{{- toYaml .annotations | nindent 4 }}
+{{- end }}
+spec:
+  destination:
+    namespace: {{ .destination.namespace | default $.Values.default.app.destination.namespace | required (printf "No destination.namespace specified") }}
+    server: {{ .destination.server | default $.Values.default.app.destination.server | required (printf "No destination.server specified") }}
+  project: {{ .project | default "default" }}
+  {{- if hasKey $app "enableAutoSync" | ternary $app.enableAutoSync $.Values.default.app.enableAutoSync }}
+  syncPolicy:
+    automated:
+      selfHeal: true
+      {{- if hasKey $app "autoSyncPrune" | ternary $app.autoSyncPrune $.Values.default.app.autoSyncPrune }}
+      prune: true
+      {{- end }}
+    {{- if .syncOptions }}
+    syncOptions:
+      {{- toYaml .syncOptions | nindent 6 }}
+    {{- end}}
+    {{- end }}
+	{{- if .multiSources }}
+  sources:
+  {{- toYaml .multiSources | nindent 4 }}
+	{{- else }}
+  source:
+    {{- if .source.path }}
+    path: {{ .source.path }}
+    {{- else }}
+    chart: {{ .source.chart }}
+    {{- end }}
+    repoURL: {{ .source.repoURL | default $.Values.default.app.source.repoURL | required (printf "No source.repoURL specified") }}
+    targetRevision: {{ .source.targetRevision | default "main" | required (printf "No source.targetRevision specified") }}
+    {{- if .source.helm }}
+    helm:
+    {{- toYaml .source.helm | nindent 6}}
+    {{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}

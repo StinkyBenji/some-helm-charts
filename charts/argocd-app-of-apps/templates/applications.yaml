@@ -23,8 +23,8 @@ metadata:
 {{- end }}
 spec:
   destination:
-    namespace: {{ .destination.namespace | default $.Values.default.app.destination.namespace | required (printf "No destination.namespace specified") }}
-    server: {{ .destination.server | default $.Values.default.app.destination.server | required (printf "No destination.server specified") }}
+    namespace: {{ (.destination).namespace | default $.Values.default.app.destination.namespace | required (printf "No destination.namespace specified") }}
+    server: {{ (.destination).server | default $.Values.default.app.destination.server | required (printf "No destination.server specified") }}
   project: {{ .project | default "default" }}
   {{- if hasKey $app "enableAutoSync" | ternary $app.enableAutoSync $.Values.default.app.enableAutoSync }}
   syncPolicy:

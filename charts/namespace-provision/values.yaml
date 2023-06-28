@@ -11,16 +11,9 @@ ocp_namespace:
     storage: 20Gi
 
   rbac:
-    - role: admin
-      name:
-      - group1
-      - group4
-    - role: view
-      name:
-      - group2
-    - role: edit
-      name:
-      - group3
+    - name: dunno
+      kind: user
+      role: admin
 
   networkPolicy:
     enabled: true

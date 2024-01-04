@@ -61,6 +61,9 @@ spec:
     helm:
     {{- toYaml .source.helm | nindent 6}}
     {{- end }}
+  {{- if .extraSpec }}
+  {{- toYaml .extraSpec | nindent 2 }}
+  {{- end }}
 {{- end }}
 {{- end }}
 {{- end }}

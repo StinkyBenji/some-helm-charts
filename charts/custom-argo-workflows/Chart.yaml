@@ -1,0 +1,10 @@
+apiVersion: v2
+name: custom-argo-workflows
+description: A Helm chart for deploying argo workflows with argocd dex server 
+type: application
+version: 0.0.1
+appVersion: "1.16.0"
+dependencies:
+- name: argo-workflows
+  version: 0.40.5
+  repository: https://argoproj.github.io/argo-helm

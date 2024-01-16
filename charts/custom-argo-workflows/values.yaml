@@ -1,0 +1,53 @@
+argo-workflows:
+  workflow:
+    serviceAccount:
+      create: true
+      name: "argo-workflows"
+    rbac:
+      create: true
+  singleNamespace: false
+
+  controller:
+    workflowNamespaces:
+      - argo-workflows
+    replicas: 2 
+    pdb:
+      enabled: true
+      minAvailable: 1
+    serviceMonitor:
+      enabled: true
+    metricsConfig:
+      enabled: true
+    telemetryConfig:
+      enabled: true  
+    workflowDefaults:
+      spec:
+        serviceAccountName: argo-workflows
+
+  server:
+    autoscaling:
+      enabled: true
+      minReplicas: 2 # should be strictly greater than PDB minAvailable
+    pdb:
+      enabled: true
+      minAvailable: 1
+
+    authModes:
+      - sso
+
+    sso:
+      enabled: true
+      issuer: "https://dex-server-argo-workflows.apps.ocp4.whatever.out-of-my-head.de/api/dex"
+      sessionExpiry: 240h
+      clientId:
+        name: argo-wf-dex
+        key: client
+      clientSecret:
+        name: argo-wf-dex
+        key: token
+      redirectUrl: "https://argo-workflows-server-argo-workflows.apps.ocp4.whatever.out-of-my-head.de/oauth2/callback"
+      rbac:
+        enabled: true
+      scopes:
+        - groups
+      insecureSkipVerify: true

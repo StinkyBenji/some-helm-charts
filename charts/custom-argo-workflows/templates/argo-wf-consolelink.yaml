@@ -1,0 +1,11 @@
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: argo-workflows
+spec:
+  href: https://argo-workflows-server-argo-workflows.apps.ocp4.whatever.out-of-my-head.de
+  text: Argo Workflows
+  applicationMenu:
+    section: GitOps
+    imageURL: https://raw.githubusercontent.com/argoproj/argo-workflows/main/docs/assets/logo.png
+  location: ApplicationMenu

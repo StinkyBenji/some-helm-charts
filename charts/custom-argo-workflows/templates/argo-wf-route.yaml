@@ -1,0 +1,15 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: argo-workflows-server
+  namespace: argo-workflows
+spec:
+  to:
+    kind: Service
+    name: argo-wf-argo-workflows-server
+    weight: 100
+  port:
+    targetPort: 2746
+  tls:
+    termination: edge
+  wildcardPolicy: None

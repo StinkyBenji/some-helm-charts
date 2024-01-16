@@ -1,0 +1,9 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: argo-wf-dex
+type: Opaque
+stringData:
+  client: argo-workflows
+  token: <the-secret>

@@ -13,7 +13,6 @@ metadata:
 {{- toYaml .labels | nindent 4 }}
 {{- end }}
 {{- end }}
-
 {{- if $.Values.default.app.annotations }}
   annotations:
 {{- toYaml $.Values.default.app.annotations | nindent 4 }}
@@ -21,6 +20,10 @@ metadata:
 {{- toYaml .annotations | nindent 4 }}
 {{- end }}
 {{- end }}
+{{- if .extraMetadata }}
+{{- toYaml .extraMetadata | nindent 2 }}
+{{- end }}
+
 spec:
   destination:
     namespace: {{ (.destination).namespace | default $.Values.default.app.destination.namespace | required (printf "No destination.namespace specified") }}
@@ -33,10 +36,14 @@ spec:
       {{- if hasKey $app "autoSyncPrune" | ternary $app.autoSyncPrune $.Values.default.app.autoSyncPrune }}
       prune: true
       {{- end }}
+    {{- if .syncRetry }}
+    retry:
+      {{- toYaml .syncRetry | nindent 6 }}
+    {{- end }}
     {{- if .syncOptions }}
     syncOptions:
       {{- toYaml .syncOptions | nindent 6 }}
-    {{- end}}
+    {{- end }}
     {{- end }}
   {{- if .multiSources }}
   sources:
@@ -54,6 +61,9 @@ spec:
     helm:
     {{- toYaml .source.helm | nindent 6}}
     {{- end }}
+  {{- if .extraSpec }}
+  {{- toYaml .extraSpec | nindent 2 }}
+  {{- end }}
 {{- end }}
 {{- end }}
 {{- end }}

@@ -1,0 +1,8 @@
+kind: Secret
+apiVersion: v1
+metadata:
+  name: dex-sa-token
+  namespace: argo-workflows
+  annotations:
+    kubernetes.io/service-account.name: dex-server
+type: kubernetes.io/service-account-token

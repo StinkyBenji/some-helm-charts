@@ -1,0 +1,11 @@
+{{- range $rbac := $.Values.rbac }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ $rbac.name }}-sa-token
+  namespace: {{ $.Values.default.namespace }}
+  annotations:
+    kubernetes.io/service-account.name: {{ $rbac.name }}-sa
+type: kubernetes.io/service-account-token
+{{- end }}

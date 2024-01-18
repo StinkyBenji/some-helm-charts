@@ -1,0 +1,11 @@
+---
+# https://github.com/argoproj/argo-workflows/discussions/9496
+# https://github.com/argoproj/argo-workflows/issues/8320
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ $.Values.default.name }}-default-sa-token
+  namespace: {{ $.Values.default.namespace }}
+  annotations:
+    kubernetes.io/service-account.name: {{ $.Values.default.name }}-default-sa
+type: kubernetes.io/service-account-token

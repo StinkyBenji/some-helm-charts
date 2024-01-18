@@ -1,0 +1,10 @@
+default:
+  name: argo-wf
+  namespace: argo-workflows
+
+rbac:
+  - name: cluster-admins
+    clusterWide: true
+    group: cluster-admins
+    precedence: 100
+    clusterRole: argo-wf-argo-workflows-admin 

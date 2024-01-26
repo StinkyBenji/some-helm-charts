@@ -6,10 +6,11 @@ argo-workflows:
     rbac:
       create: true
   singleNamespace: false
-
   controller:
     workflowNamespaces:
+      - argo-wf-demo
       - argo-workflows
+
     replicas: 2 
     pdb:
       enabled: true
@@ -51,5 +52,4 @@ argo-workflows:
         enabled: true
       scopes:
         - groups
-        - sub
       insecureSkipVerify: true

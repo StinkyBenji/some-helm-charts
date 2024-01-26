@@ -16,7 +16,7 @@ roleRef:
   {{- end }}
 subjects:
 - kind: ServiceAccount
-  name: {{ $rbac.name }}
-  namespace: {{ default $.Values.default.namespace }}
+  name: {{ $rbac.name }}-sa
+  namespace: {{ $.Values.default.namespace }}
 {{- end }}
 {{- end }}

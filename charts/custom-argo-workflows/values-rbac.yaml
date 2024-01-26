@@ -7,4 +7,4 @@ rbac:
     clusterWide: true
     group: cluster-admins
     precedence: 100
-    clusterRole: argo-wf-argo-workflows-admin 
+    clusterRole: admin 

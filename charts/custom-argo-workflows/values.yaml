@@ -1,3 +1,14 @@
+default:
+  name: argo-wf
+  namespace: argo-workflows
+
+rbac:
+  - name: cluster-admins
+    clusterWide: true
+    group: cluster-admins
+    precedence: 100
+    clusterRole: admin 
+
 argo-workflows:
   workflow:
     serviceAccount:
@@ -38,18 +49,5 @@ argo-workflows:
       - client
 
     sso:
-      enabled: true
-      issuer: "https://dex-server-argo-workflows.apps.ocp4.whatever.out-of-my-head.de/api/dex"
-      sessionExpiry: 240h
-      clientId:
-        name: argo-wf-dex
-        key: client
-      clientSecret:
-        name: argo-wf-dex
-        key: token
-      redirectUrl: "https://argo-workflows-server-argo-workflows.apps.ocp4.whatever.out-of-my-head.de/oauth2/callback"
-      rbac:
-        enabled: true
-      scopes:
-        - groups
-      insecureSkipVerify: true
+      enabled: false
+  

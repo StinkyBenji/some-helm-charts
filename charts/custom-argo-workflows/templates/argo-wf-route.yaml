@@ -6,7 +6,7 @@ metadata:
 spec:
   to:
     kind: Service
-    name: argo-wf-argo-workflows-server
+    name: argowf-server
     weight: 100
   port:
     targetPort: 2746

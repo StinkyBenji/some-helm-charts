@@ -1,3 +1,4 @@
+{{- if .Values.ocp_namespace.quota }}
 ---
 apiVersion: v1
 kind: ResourceQuota
@@ -9,3 +10,4 @@ spec:
     limits.cpu: {{ .Values.ocp_namespace.quotas.cpu }}
     limits.memory: {{ .Values.ocp_namespace.quotas.memory }}
     requests.storage: {{ .Values.ocp_namespace.quotas.storage }}
+{{- end }}

@@ -1,3 +1,4 @@
+{{- if .Values.ocp_namespace.rbac }}
 ---
 apiVersion: v1
 kind: List
@@ -18,4 +19,5 @@ items:
   - kind: "{{ $rb.kind }}" 
     name: "{{ $rb.name }}"
     apiGroup: rbac.authorization.k8s.io
+{{- end }}
 {{- end }}

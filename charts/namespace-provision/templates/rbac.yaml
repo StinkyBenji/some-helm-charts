@@ -1,4 +1,4 @@
-{{- if .Values.ocp_namespace.rbac }}
+{{- if .Values.ocp_namespace.rbac.enabled }}
 ---
 apiVersion: v1
 kind: List

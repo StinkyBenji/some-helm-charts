@@ -11,12 +11,10 @@ ocp_namespace:
     storage: 20Gi
 
   rbac:
-    - name: dunno
-      kind: user
-      role: admin
+    enabled: false
 
   networkPolicy:
-    enabled: true
+    enabled: false
 
 networkPolicies:
   - name: deny-all-by-default

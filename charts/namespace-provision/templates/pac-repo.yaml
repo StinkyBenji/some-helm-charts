@@ -1,0 +1,17 @@
+{{- if .Values.ocp_namespace.pac.enabled }}
+---
+apiVersion: pipelinesascode.tekton.dev/v1alpha1
+kind: Repository
+metadata:
+  name: {{ .Values.ocp_namespace.pac.repoName }}
+  namespace: {{ .Values.ocp_namespace.name }}
+spec:
+  url: {{ .Values.ocp_namespace.pac.repoURL | quote }}
+  git_provider:
+    secret:
+      name: "github-webhook-config"
+      key: "provider.token"
+    webhook_secret:
+      name: "github-webhook-config"
+      key: "webhook.secret"
+{{- end }}

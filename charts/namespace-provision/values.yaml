@@ -16,6 +16,10 @@ ocp_namespace:
   networkPolicy:
     enabled: false
 
+  pac:
+    enabled: false
+
+
 networkPolicies:
   - name: deny-all-by-default
     spec:

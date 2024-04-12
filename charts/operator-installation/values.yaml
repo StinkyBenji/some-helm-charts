@@ -7,3 +7,7 @@ default:
   installPlanApproval: Automatic
   source: redhat-operators
   sourceNamespace: openshift-marketplace
+
+operator:
+  name: ""
+  namespace: "" 

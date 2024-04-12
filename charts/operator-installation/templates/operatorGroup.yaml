@@ -1,15 +1,15 @@
 {{- if .Values.enabled }}
-{{- range $operator := .Values.operators }}
-{{- if .operatorGroup }}
+{{- if .Values.operator }}
+{{- if .Values.operator.operatorGroup }}
 ---
 apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
-  name: {{ .name }}
-  namespace: {{ .namespace }}
+  name: {{ .Values.operator.name }}
+  namespace: {{ .Values.operator.namespace }}
 spec:
-  targetNamespaces: 
-    {{ tpl .targetNamespaces $ }}
+  targetNamespaces:
+    - {{ .Values.operator.namespace }}
 {{- end }}
 {{- end }}
 {{- end }}

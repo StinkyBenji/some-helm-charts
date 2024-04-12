@@ -1,21 +1,21 @@
-{{- if .Values.configMap.enabled }}
+{{- if .Values.configMap.enabled -}}
+---
 apiVersion: apps/v1
 kind: ConfigMap
 metadata:
   name: {{ .Values.appName }}-cm
+  {{- if .Values.configMap.labels }}
   labels:
-    {{- include "springboot-deployment.labels" . | nindent 4 }}
-    {{- if .Values.configMap.labels }}
     {{- with  .Values.configMap.labels -}}
     {{ toYaml . | nindent 4 }}
     {{- end }}
-    {{- end }}
+  {{- end }}
   {{- if .Values.configMap.annotations }}
   annotations:
-  {{- with .Values.configMap.annotations -}}
-  {{ toYaml . | nindent 4 }}
-  {{- end }}
+    {{- with .Values.configMap.annotations -}}
+    {{ toYaml . | nindent 4 }}
+    {{- end }}
   {{- end }}
 data:
-  {{- toYaml $Values.cofigMap.data | nindent 2 }}
+  {{- toYaml $.Values.cofigMap.data | nindent 2 }}
 {{- end }}
